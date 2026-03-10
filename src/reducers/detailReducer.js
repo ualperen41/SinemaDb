@@ -1,20 +1,26 @@
-import { ActionTypes } from "../actions/actionTypes";
+import {
+  FETCH_MOVIE_DETAIL_REQUEST,
+  FETCH_MOVIE_DETAIL_SUCCESS,
+  FETCH_MOVIE_DETAIL_FAILURE,
+} from "../actions/actionTypes.js";
 
 const initialState = {
   movie: null,
-  isLoading: false,
+  loading: false,
   error: null,
 };
 
-export const detailReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case ActionTypes.FETCH_DETAIL_START:
-      return { ...state, isLoading: true, error: null };
-    case ActionTypes.FETCH_DETAIL_SUCCESS:
-      return { ...state, isLoading: false, movie: payload };
-    case ActionTypes.FETCH_DETAIL_ERROR:
-      return { ...state, isLoading: false, error: payload };
+const detailReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH_MOVIE_DETAIL_REQUEST:
+      return { ...state, loading: true, error: null, movie: null };
+    case FETCH_MOVIE_DETAIL_SUCCESS:
+      return { ...state, loading: false, movie: action.payload };
+    case FETCH_MOVIE_DETAIL_FAILURE:
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
 };
+
+export default detailReducer;
